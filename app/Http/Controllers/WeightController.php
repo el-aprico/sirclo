@@ -17,8 +17,12 @@ class WeightController extends Controller
     {
         $data = Weight::orderBy('tanggal', 'ASC')->get();
         $len = sizeof($data);
-        $min = Weight::sum('min') / $len;
-        $max = Weight::sum('max') / $len;
+        $min = 0;
+        $max = 0;
+        if ($len !== 0) {
+            $min = Weight::sum('min') / $len;
+            $max = Weight::sum('max') / $len;
+        }
         $args = [
             'weights' => Weight::orderBy('tanggal', 'ASC')->get(),
             'min' => $min,
